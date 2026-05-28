@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Gift, Sparkles } from "lucide-react";
+import { Gift, Menu, Sparkles } from "lucide-react";
 import { collectionHighlights, howItWorks, productCatalog, testimonials } from "@/lib/brand-data";
 import { useCartStore } from "@/store/cart-store";
 
@@ -98,10 +98,10 @@ export default function Home() {
             animate={{ y: 0 }}
             exit={{ y: "-100vh" }}
             transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-[100] bg-white"
+            className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-black"
           >
             <video
-              className="absolute inset-0 h-full w-full object-cover"
+              className={`absolute inset-0 h-full w-full object-cover ${isAndroid ? "scale-95" : ""}`}
               autoPlay
               muted
               playsInline
@@ -124,7 +124,11 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           className={`fixed inset-x-0 top-3 z-50 mx-auto w-[calc(100%-1.5rem)] max-w-6xl rounded-full border border-black/10 px-4 py-3 backdrop-blur-xl transition-all duration-300 ${scrolled ? "bg-white/90 shadow-[0_18px_60px_-20px_rgba(0,0,0,0.15)]" : "bg-white/75"}`}
         >
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center">
+            <Link href="/" className="flex-1">
+              <Image src="/logo-no-bg.png" alt="KAISAA" width={70} height={70} />
+            </Link>
+
             <div className="hidden items-center gap-6 text-[11px] uppercase tracking-[0.24em] text-black/50 md:flex">
               <Link href="#home" className="transition hover:text-black">Home</Link>
               <Link href="#collections" className="transition hover:text-black">Collections</Link>
@@ -133,20 +137,18 @@ export default function Home() {
               <Link href="#story" className="transition hover:text-black">About</Link>
             </div>
 
-            <Link href="/" className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-black/5 ring-1 ring-black/10">
-                <Image src="/logo-no-bg.png" alt="KAISAA logo" width={28} height={28} />
+            <div className="flex flex-1 items-center justify-end gap-2">
+              <div className="hidden items-center gap-2 md:flex">
+                <Link href="/cart" className="rounded-full border border-black/10 px-3 py-2 text-[10px] uppercase tracking-[0.28em] text-black/60 transition hover:bg-black/5">
+                  Cart ({cartCount})
+                </Link>
+                <Link href="/checkout" className="rounded-full bg-black px-3 py-2 text-[10px] uppercase tracking-[0.28em] text-white transition hover:bg-gray-800">
+                  Book a set
+                </Link>
               </div>
-              <p className="text-xs uppercase tracking-[0.28em] text-[#1a1a1a]">KAISAA</p>
-            </Link>
-
-            <div className="flex items-center gap-2">
-              <Link href="/cart" className="rounded-full border border-black/10 px-3 py-2 text-[10px] uppercase tracking-[0.28em] text-black/60 transition hover:bg-black/5">
-                Cart ({cartCount})
-              </Link>
-              <Link href="/checkout" className="rounded-full bg-black px-3 py-2 text-[10px] uppercase tracking-[0.28em] text-white transition hover:bg-gray-800">
-                Book a set
-              </Link>
+              <button className="flex items-center justify-center rounded-full border border-black/10 p-2 md:hidden">
+                <Menu className="h-6 w-6 text-black/60" />
+              </button>
             </div>
           </div>
         </motion.nav>
