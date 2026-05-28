@@ -102,7 +102,7 @@ export default function Home() {
             className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-black"
           >
             <video
-              className={`absolute inset-0 h-full w-full object-cover ${isAndroid ? "scale-[0.58]" : ""}`}
+              className="absolute inset-0 h-full w-full object-cover"
               autoPlay
               muted
               playsInline
