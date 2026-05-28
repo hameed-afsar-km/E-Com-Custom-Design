@@ -102,18 +102,14 @@ export default function Home() {
             className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-black"
           >
             <video
-  className={`absolute inset-0 h-full w-full ${
-    isAndroid
-      ? "object-contain scale-[0.82]"
-      : "object-cover"
-  }`}
-  autoPlay
-  muted
-  playsInline
-  key={isAndroid ? "vertical" : "horizontal"}
-  src={isAndroid ? "/vertical-splash.webm" : "/horizontal-splash.webm"}
-  onEnded={() => setShowSplash(false)}
-/>
+              className={`absolute inset-0 h-full w-full object-cover ${isAndroid ? "scale-[0.58]" : ""}`}
+              autoPlay
+              muted
+              playsInline
+              key={isAndroid ? "vertical" : "horizontal"}
+              src={isAndroid ? "/vertical-splash.webm" : "/horizontal-splash.webm"}
+              onEnded={() => setShowSplash(false)}
+            />
           </motion.div>
         ) : null}
       </AnimatePresence>
