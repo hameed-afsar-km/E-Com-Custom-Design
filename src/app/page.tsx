@@ -60,6 +60,7 @@ export default function Home() {
   const [ribbon, setRibbon] = useState("violet");
   const [card, setCard] = useState("oat");
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const addItem = useCartStore((state) => state.addItem);
 
@@ -101,14 +102,18 @@ export default function Home() {
             className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-black"
           >
             <video
-              className={`absolute inset-0 h-full w-full object-cover ${isAndroid ? "scale-95" : ""}`}
-              autoPlay
-              muted
-              playsInline
-              key={isAndroid ? "vertical" : "horizontal"}
-              src={isAndroid ? "/vertical-splash.webm" : "/horizontal-splash.webm"}
-              onEnded={() => setShowSplash(false)}
-            />
+  className={`absolute inset-0 h-full w-full ${
+    isAndroid
+      ? "object-contain scale-[0.82]"
+      : "object-cover"
+  }`}
+  autoPlay
+  muted
+  playsInline
+  key={isAndroid ? "vertical" : "horizontal"}
+  src={isAndroid ? "/vertical-splash.webm" : "/horizontal-splash.webm"}
+  onEnded={() => setShowSplash(false)}
+/>
           </motion.div>
         ) : null}
       </AnimatePresence>
@@ -146,12 +151,27 @@ export default function Home() {
                   Book a set
                 </Link>
               </div>
-              <button className="flex items-center justify-center rounded-full border border-black/10 p-2 md:hidden">
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="flex items-center justify-center rounded-full border border-black/10 p-2 md:hidden">
                 <Menu className="h-6 w-6 text-black/60" />
               </button>
             </div>
           </div>
         </motion.nav>
+
+        {mobileMenuOpen && (
+          <div className="fixed inset-x-4 top-20 z-40 rounded-3xl border border-black/10 bg-white/95 p-6 backdrop-blur-xl md:hidden">
+            <div className="flex flex-col gap-4 text-sm uppercase tracking-[0.24em] text-black/60">
+              <Link href="#home" onClick={() => setMobileMenuOpen(false)} className="transition hover:text-black">Home</Link>
+              <Link href="#collections" onClick={() => setMobileMenuOpen(false)} className="transition hover:text-black">Collections</Link>
+              <Link href="#customize" onClick={() => setMobileMenuOpen(false)} className="transition hover:text-black">Customize</Link>
+              <Link href="#bouquets" onClick={() => setMobileMenuOpen(false)} className="transition hover:text-black">Bouquets</Link>
+              <Link href="#story" onClick={() => setMobileMenuOpen(false)} className="transition hover:text-black">About</Link>
+              <hr className="border-black/10" />
+              <Link href="/cart" onClick={() => setMobileMenuOpen(false)} className="transition hover:text-black">Cart ({cartCount})</Link>
+              <Link href="/checkout" onClick={() => setMobileMenuOpen(false)} className="rounded-full bg-black px-4 py-3 text-center text-white">Book a set</Link>
+            </div>
+          </div>
+        )}
 
         <main id="home" className="pt-24">
           <section className="relative px-4 pb-12 pt-6 md:px-6">
